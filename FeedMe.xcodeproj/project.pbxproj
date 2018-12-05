@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		687A00A121B8547100B03EB9 /* VineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A00A021B8547100B03EB9 /* VineNode.swift */; };
 		68B67FE121B8278A00A37C5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B67FE021B8278A00A37C5A /* AppDelegate.swift */; };
 		68B67FE321B8278A00A37C5A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 68B67FE221B8278A00A37C5A /* GameScene.sks */; };
 		68B67FE521B8278A00A37C5A /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 68B67FE421B8278A00A37C5A /* Actions.sks */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		687A00A021B8547100B03EB9 /* VineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VineNode.swift; sourceTree = "<group>"; };
 		68B67FDD21B8278A00A37C5A /* FeedMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeedMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68B67FE021B8278A00A37C5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68B67FE221B8278A00A37C5A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		68B6800F21B8296300A37C5A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				687A00A021B8547100B03EB9 /* VineNode.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				68B67FE721B8278A00A37C5A /* GameScene.swift in Sources */,
 				68B67FE921B8278A00A37C5A /* GameViewController.swift in Sources */,
 				68B67FE121B8278A00A37C5A /* AppDelegate.swift in Sources */,
+				687A00A121B8547100B03EB9 /* VineNode.swift in Sources */,
 				68B6801121B8299900A37C5A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
