@@ -1,89 +1,111 @@
-//
-//  GameScene.swift
-//  FeedMe
-//
-//  Created by 20083169 on 05/12/2018.
-//  Copyright © 2018 20083169. All rights reserved.
-//
-
 import SpriteKit
-import GameplayKit
 
-class GameScene: SKScene {
-    
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
+        //setUpPhysics()
+        setUpScenery()
+        setUpPrize()
+        //setUpVines()
+        setUpCrocodile()
+        //setUpAudio()
+    }
+    	
+    //MARK: - Level setup
+    
+    fileprivate func setUpPhysics() {
+        physicsWorld.contactDelegate = self
+        physicsWorld.gravity = CGVector(dx: 0.0, dy: -9.8)
+        physicsWorld.speed = 1.0
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
+    }
+    fileprivate func setUpScenery() {
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+        let background = SKSpriteNode(imageNamed: ImageName.Background)
+        background.anchorPoint = CGPoint(x: 0, y: 0)
+        background.position = CGPoint(x: 0, y: 0)
+        background.zPosition = Layer.Background
+        background.size = CGSize(width: size.width, height: size.height)
+        addChild(background)
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
-    }
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        let water = SKSpriteNode(imageNamed: ImageName.Water)
+        water.anchorPoint = CGPoint(x: 0, y: 0)
+        water.position = CGPoint(x: 0, y: 0)
+        water.zPosition = Layer.Water
+        water.size = CGSize(width: size.width, height: size.height * 21.39 / 100)
+        addChild(water)
+    }
+    fileprivate func setUpPrize() {
+        
+        prize = SKSpriteNode(imageNamed: ImageName.Prize)
+        prize.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: ImageName.PrizeMask), size: prize.size)
+        prize.position = CGPoint(x: size.width * 0.5, y: size.height * 0.7)
+        prize.zPosition = Layer.Prize
+        prize.physicsBody?.categoryBitMask = PhysicsCategory.Prize
+        prize.physicsBody?.collisionBitMask = 0
+        prize.physicsBody?.density = 0.5
+        prize.physicsBody?.isDynamic = true
+        
+        addChild(prize)
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
+    //MARK: - Vine methods
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
+    fileprivate func setUpVines() { }
     
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+    //MARK: - Croc methods
+    private var crocodile: SKSpriteNode!
+    private var prize: SKSpriteNode!
+    fileprivate func setUpCrocodile() {
+        
+        crocodile = SKSpriteNode(imageNamed: ImageName.CrocMouthClosed)
+        crocodile.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: ImageName.CrocMask), size: crocodile.size)
+        crocodile.position = CGPoint(x: size.width * 0.75, y: size.height * 0.312)
+        crocodile.zPosition = Layer.Crocodile
+        crocodile.physicsBody?.categoryBitMask = PhysicsCategory.Crocodile
+        crocodile.physicsBody?.collisionBitMask = 0
+        crocodile.physicsBody?.contactTestBitMask = PhysicsCategory.Crocodile
+        crocodile.physicsBody?.isDynamic = false
+        addChild(crocodile)
+        
+        animateCrocodile()
+        
     }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+    fileprivate func animateCrocodile() {
+        srand48(Int(Date().timeIntervalSince1970))
+        let durationOpen = drand48() + 2
+        let open = SKAction.setTexture(SKTexture(imageNamed: ImageName.CrocMouthOpen))
+        let waitOpen = SKAction.wait(forDuration: durationOpen)
+        
+        
+        let durationClosed = drand48() + 3
+        let close = SKAction.setTexture(SKTexture(imageNamed: ImageName.CrocMouthClosed))
+        let waitClosed = SKAction.wait(forDuration: durationClosed)
+        
+        let sequence = SKAction.sequence([waitOpen,open,waitClosed,close])
+        let loop = SKAction.repeatForever(sequence)
+        
+        crocodile.run(loop)
     }
+    fileprivate func runNomNomAnimationWithDelay(_ delay: TimeInterval) { }
+    
+    //MARK: - Touch handling
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) { }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) { }
+    fileprivate func showMoveParticles(touchPosition: CGPoint) { }
+    
+    //MARK: - Game logic
+    
+    override func update(_ currentTime: TimeInterval) { }
+    func didBegin(_ contact: SKPhysicsContact) { }
+    fileprivate func checkIfVineCutWithBody(_ body: SKPhysicsBody) { }
+    fileprivate func switchToNewGameWithTransition(_ transition: SKTransition) { }
+    
+    //MARK: - Audio
+    
+    fileprivate func setUpAudio() { }
+
 }

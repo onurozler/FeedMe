@@ -15,6 +15,15 @@
 		68B67FEC21B8278A00A37C5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68B67FEA21B8278A00A37C5A /* Main.storyboard */; };
 		68B67FEE21B8278C00A37C5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68B67FED21B8278C00A37C5A /* Assets.xcassets */; };
 		68B67FF121B8278C00A37C5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68B67FEF21B8278C00A37C5A /* LaunchScreen.storyboard */; };
+		68B6800421B8281600A37C5A /* Level-01.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68B67FFA21B8281600A37C5A /* Level-01.plist */; };
+		68B6800521B8281600A37C5A /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 68B67FFC21B8281600A37C5A /* Particle.png */; };
+		68B6800621B8281600A37C5A /* Particle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 68B67FFD21B8281600A37C5A /* Particle.sks */; };
+		68B6800721B8281600A37C5A /* Particle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 68B67FFE21B8281600A37C5A /* Particle@2x.png */; };
+		68B6800821B8281600A37C5A /* CheeZeeJungle.caf in Resources */ = {isa = PBXBuildFile; fileRef = 68B6800021B8281600A37C5A /* CheeZeeJungle.caf */; };
+		68B6800921B8281600A37C5A /* NomNom.caf in Resources */ = {isa = PBXBuildFile; fileRef = 68B6800121B8281600A37C5A /* NomNom.caf */; };
+		68B6800A21B8281600A37C5A /* Slice.caf in Resources */ = {isa = PBXBuildFile; fileRef = 68B6800221B8281600A37C5A /* Slice.caf */; };
+		68B6800B21B8281600A37C5A /* Splash.caf in Resources */ = {isa = PBXBuildFile; fileRef = 68B6800321B8281600A37C5A /* Splash.caf */; };
+		68B6801121B8299900A37C5A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B6801021B8299900A37C5A /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +37,15 @@
 		68B67FED21B8278C00A37C5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		68B67FF021B8278C00A37C5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		68B67FF221B8278C00A37C5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		68B67FFA21B8281600A37C5A /* Level-01.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Level-01.plist"; sourceTree = "<group>"; };
+		68B67FFC21B8281600A37C5A /* Particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Particle.png; sourceTree = "<group>"; };
+		68B67FFD21B8281600A37C5A /* Particle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Particle.sks; sourceTree = "<group>"; };
+		68B67FFE21B8281600A37C5A /* Particle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Particle@2x.png"; sourceTree = "<group>"; };
+		68B6800021B8281600A37C5A /* CheeZeeJungle.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CheeZeeJungle.caf; sourceTree = "<group>"; };
+		68B6800121B8281600A37C5A /* NomNom.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NomNom.caf; sourceTree = "<group>"; };
+		68B6800221B8281600A37C5A /* Slice.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Slice.caf; sourceTree = "<group>"; };
+		68B6800321B8281600A37C5A /* Splash.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Splash.caf; sourceTree = "<group>"; };
+		68B6801021B8299900A37C5A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +62,9 @@
 		68B67FD421B8278A00A37C5A = {
 			isa = PBXGroup;
 			children = (
+				68B6800F21B8296300A37C5A /* Classes */,
+				68B6800E21B8295B00A37C5A /* Helpers */,
+				68B67FF821B8281600A37C5A /* Resources */,
 				68B67FDF21B8278A00A37C5A /* FeedMe */,
 				68B67FDE21B8278A00A37C5A /* Products */,
 			);
@@ -71,6 +92,60 @@
 				68B67FF221B8278C00A37C5A /* Info.plist */,
 			);
 			path = FeedMe;
+			sourceTree = "<group>";
+		};
+		68B67FF821B8281600A37C5A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				68B67FF921B8281600A37C5A /* Data */,
+				68B67FFB21B8281600A37C5A /* Particles */,
+				68B67FFF21B8281600A37C5A /* Sounds */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		68B67FF921B8281600A37C5A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				68B67FFA21B8281600A37C5A /* Level-01.plist */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		68B67FFB21B8281600A37C5A /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				68B67FFC21B8281600A37C5A /* Particle.png */,
+				68B67FFD21B8281600A37C5A /* Particle.sks */,
+				68B67FFE21B8281600A37C5A /* Particle@2x.png */,
+			);
+			path = Particles;
+			sourceTree = "<group>";
+		};
+		68B67FFF21B8281600A37C5A /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				68B6800021B8281600A37C5A /* CheeZeeJungle.caf */,
+				68B6800121B8281600A37C5A /* NomNom.caf */,
+				68B6800221B8281600A37C5A /* Slice.caf */,
+				68B6800321B8281600A37C5A /* Splash.caf */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
+		68B6800E21B8295B00A37C5A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				68B6801021B8299900A37C5A /* Constants.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		68B6800F21B8296300A37C5A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,9 +208,17 @@
 			files = (
 				68B67FEC21B8278A00A37C5A /* Main.storyboard in Resources */,
 				68B67FE321B8278A00A37C5A /* GameScene.sks in Resources */,
+				68B6800421B8281600A37C5A /* Level-01.plist in Resources */,
+				68B6800B21B8281600A37C5A /* Splash.caf in Resources */,
+				68B6800821B8281600A37C5A /* CheeZeeJungle.caf in Resources */,
+				68B6800521B8281600A37C5A /* Particle.png in Resources */,
+				68B6800A21B8281600A37C5A /* Slice.caf in Resources */,
+				68B6800921B8281600A37C5A /* NomNom.caf in Resources */,
 				68B67FEE21B8278C00A37C5A /* Assets.xcassets in Resources */,
 				68B67FF121B8278C00A37C5A /* LaunchScreen.storyboard in Resources */,
 				68B67FE521B8278A00A37C5A /* Actions.sks in Resources */,
+				68B6800621B8281600A37C5A /* Particle.sks in Resources */,
+				68B6800721B8281600A37C5A /* Particle@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +232,7 @@
 				68B67FE721B8278A00A37C5A /* GameScene.swift in Sources */,
 				68B67FE921B8278A00A37C5A /* GameViewController.swift in Sources */,
 				68B67FE121B8278A00A37C5A /* AppDelegate.swift in Sources */,
+				68B6801121B8299900A37C5A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
