@@ -4,7 +4,7 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
-        //setUpPhysics()
+        setUpPhysics()
         setUpScenery()
         setUpPrize()
         setUpVines()
@@ -116,7 +116,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //MARK: - Touch handling
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) { }
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        for touch in touches {
+            let startPoint = touch.location(in: self)
+            let endPoint = touch.previousLocation(in: self)
+            
+            // check if vine cut
+            scene?.physicsWorld.enumerateBodies(alongRayStart: startPoint, end: endPoint,
+                                                using: { (body, point, normal, stop) in
+                                                    self.checkIfVineCutWithBody(body)
+            })
+            
+            // produce some nice particles
+            showMoveParticles(touchPosition: startPoint)
+        }
+        
+        
+    }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) { }
     fileprivate func showMoveParticles(touchPosition: CGPoint) { }
     
@@ -124,7 +141,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) { }
     func didBegin(_ contact: SKPhysicsContact) { }
-    fileprivate func checkIfVineCutWithBody(_ body: SKPhysicsBody) { }
+    fileprivate func checkIfVineCutWithBody(_ body: SKPhysicsBody) {
+        
+        let node = body.node!
+        
+        // if it has a name it must be a vine node
+        if let name = node.name {
+            // snip the vine
+            node.removeFromParent()
+            
+            // fade out all nodes matching name
+            enumerateChildNodes(withName: name, using: { (node, stop) in
+                let fadeAway = SKAction.fadeOut(withDuration: 0.25)
+                let removeNode = SKAction.removeFromParent()
+                let sequence = SKAction.sequence([fadeAway, removeNode])
+                node.run(sequence)
+            })
+        }
+        
+    }
     fileprivate func switchToNewGameWithTransition(_ transition: SKTransition) { }
     
     //MARK: - Audio
