@@ -7,15 +7,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var levelOver = false
     private var vineCut = false
     
+   
+    var scoreLabel: SKLabelNode!
+    
+    private static var score: Int! = 0
+    var scoreTemp = 0
     override func didMove(to view: SKView) {
+
         setUpPhysics()
         setUpScenery()
         setUpPrize()
         setUpVines()
         setUpCrocodile()
+        showLives()
         setUpAudio()
+        setScoreLabel()
+
     }
-    	
+    
+    func setScoreLabel()
+    {
+        scoreTemp = GameScene.score
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.text = "Score: \(scoreTemp)"
+        scoreLabel.fontSize = 25
+        scoreLabel.position = CGPoint(x: size.width - 70 , y: size.height - 25)
+        scoreLabel.zPosition = Layer.UI
+        addChild(scoreLabel)
+    }
+    
     //MARK: - Level setup
     
     fileprivate func setUpPhysics() {
@@ -102,7 +122,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     fileprivate func animateCrocodile() {
         srand48(Int(Date().timeIntervalSince1970))
-        let durationOpen = drand48() + 2
+        let durationOpen = 2.0 + drand48() * 2.0
         let open = SKAction.setTexture(SKTexture(imageNamed: ImageName.CrocMouthOpen))
         let waitOpen = SKAction.wait(forDuration: durationOpen)
         
@@ -185,6 +205,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             levelOver = true
             run(splashSoundAction)
             switchToNewGameWithTransition(SKTransition.fade(withDuration: 1.0))
+            GameScene.numLive = GameScene.numLive - 1
         }
         
     }
@@ -212,8 +233,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // transition to next level
             switchToNewGameWithTransition(SKTransition.doorway(withDuration: 1.0))
+            GameScene.numLive = 3
+            
+            GameScene.score = GameScene.score + 1
         }
     }
+    private static var numLive: Int! = 3
+     fileprivate func showLives(){
+        
+        for i in 0...GameScene.numLive-1{
+            let lives = SKSpriteNode(imageNamed: ImageName.Heart)
+            lives.anchorPoint = CGPoint(x: 0, y: 0)
+            lives.position = CGPoint(x: CGFloat(CGFloat(i)*lives.size.width), y: size.height-lives.size.height)
+            lives.zPosition = Layer.UI
+           
+            addChild(lives)
+        }
+    }
+   
     
     fileprivate func checkIfVineCutWithBody(_ body: SKPhysicsBody) {
         if vineCut && !GameConfiguration.CanCutMultipleVinesAtOnce {
