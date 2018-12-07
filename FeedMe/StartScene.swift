@@ -9,10 +9,13 @@ class StartScene: SKScene, SKPhysicsContactDelegate {
     
     var musicLabel: SKLabelNode!
     var effectsLabel: SKLabelNode!
-    
+    var canCutMultiple: SKLabelNode!
+    var saveButton: SKSpriteNode!
+    var saveButtonLabel: SKLabelNode!
     
     public static var effects: String! = "On"
     public static var musics: String! = "On"
+    public static var multiple: String! = "Off"
     
     override func didMove(to view: SKView) {
  
@@ -20,6 +23,8 @@ class StartScene: SKScene, SKPhysicsContactDelegate {
 
         
     }
+    
+    var isOptions: Bool = false
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -29,35 +34,59 @@ class StartScene: SKScene, SKPhysicsContactDelegate {
             
             if objects.contains(playbutton)
             {
-                //self.scene?.view?.presentScene(GameScene(size:self.size))
+                
                 let gameSceneTemp = GameScene(size: self.size)
                 self.scene?.view?.presentScene(gameSceneTemp, transition: SKTransition.doorsCloseHorizontal(withDuration: 1.0))
             }
             else if objects.contains(optionsButton){
               optionMenu()
+                isOptions = true
             }
-            else if(objects.contains(musicLabel)){
-                if(StartScene.musics == "On")
-                {
-                    StartScene.musics = "Off"
+            
+            if(isOptions)
+            {
+                if(objects.contains(musicLabel)){
+                    if(StartScene.musics == "On")
+                    {
+                        StartScene.musics = "Off"
+                    }
+                    else
+                    {
+                        StartScene.musics = "On"
+                    }
+                    checkMusic()
                 }
-                else
-                {
-                    StartScene.musics = "On"
+                else if(objects.contains(effectsLabel)){
+                    if(StartScene.effects == "On")
+                    {
+                        StartScene.effects = "Off"
+                    }
+                    else
+                    {
+                        StartScene.effects = "On"
+                    }
+                    checkEffect()
                 }
-                checkMusic()
+                else if(objects.contains(canCutMultiple)){
+                    if(StartScene.multiple == "On")
+                    {
+                        StartScene.multiple = "Off"
+                    }
+                    else
+                    {
+                        StartScene.multiple = "On"
+                    }
+                    checkMultiple()
+                }
+                    
+                else if(objects.contains(saveButton)){
+                    self.removeAllChildren()
+                    createOptions()
+                    isOptions=false
+                }
             }
-            else if(objects.contains(effectsLabel)){
-                if(StartScene.effects == "On")
-                {
-                    StartScene.effects = "Off"
-                }
-                else
-                {
-                    StartScene.effects = "On"
-                }
-                checkEffect()
-            }
+                
+           
         }
     }
     
@@ -96,6 +125,7 @@ class StartScene: SKScene, SKPhysicsContactDelegate {
     }
     var eff = "on"
     var snd = "on"
+    var multi = "on"
     func optionMenu(){
         playbutton.removeFromParent()
         optionsButton.removeFromParent()
@@ -118,18 +148,26 @@ class StartScene: SKScene, SKPhysicsContactDelegate {
         effectsLabel.zPosition = 2
         addChild(effectsLabel)
         
+        canCutMultiple = SKLabelNode(fontNamed: "Noteworthy-Bold")
+        multi = StartScene.multiple
+        canCutMultiple.text = "Multiple Cutting : \(multi)"
+        canCutMultiple.fontSize = 25.0
+        canCutMultiple.position = CGPoint(x: frame.midX, y: frame.midY+20)
+        canCutMultiple.zPosition = 2
+        addChild(canCutMultiple)
         
-        optionsButton = SKSpriteNode(imageNamed: ImageName.Button)
-        optionsButton.position = CGPoint(x: frame.midX, y: frame.midY-120)
-        optionsButton.zPosition = 1
-        addChild(optionsButton)
         
-        optionsButtonLabel = SKLabelNode(fontNamed: "Noteworthy-Bold")
-        optionsButtonLabel.text = "Save"
-        optionsButtonLabel.fontSize = 40.0
-        optionsButtonLabel.position = CGPoint(x: frame.midX, y: frame.midY-130)
-        optionsButtonLabel.zPosition = 2
-        addChild(optionsButtonLabel)
+        saveButton = SKSpriteNode(imageNamed: ImageName.Button)
+        saveButton.position = CGPoint(x: frame.midX, y: frame.midY-120)
+        saveButton.zPosition = 1
+        addChild(saveButton)
+        
+        saveButtonLabel = SKLabelNode(fontNamed: "Noteworthy-Bold")
+        saveButtonLabel.text = "Save"
+        saveButtonLabel.fontSize = 40.0
+        saveButtonLabel.position = CGPoint(x: frame.midX, y: frame.midY-130)
+        saveButtonLabel.zPosition = 2
+        addChild(saveButtonLabel)
     }
     
     func checkMusic(){
@@ -154,5 +192,16 @@ class StartScene: SKScene, SKPhysicsContactDelegate {
         effectsLabel.position = CGPoint(x: frame.midX, y: frame.midY+70)
         effectsLabel.zPosition = 2
         addChild(effectsLabel)
+    }
+    func checkMultiple(){
+        canCutMultiple.removeFromParent()
+        
+        canCutMultiple = SKLabelNode(fontNamed: "Noteworthy-Bold")
+        multi = StartScene.multiple
+        canCutMultiple.text = "Multiple Cutting : \(multi)"
+        canCutMultiple.fontSize = 25.0
+        canCutMultiple.position = CGPoint(x: frame.midX, y: frame.midY+20)
+        canCutMultiple.zPosition = 2
+        addChild(canCutMultiple)
     }
 }

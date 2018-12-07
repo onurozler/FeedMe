@@ -10,6 +10,10 @@
 		687A00A121B8547100B03EB9 /* VineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A00A021B8547100B03EB9 /* VineNode.swift */; };
 		6890BFFD21BAC0560043412D /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6890BFFC21BAC0560043412D /* StartScene.swift */; };
 		6890BFFF21BAC0670043412D /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6890BFFE21BAC0670043412D /* StartScene.sks */; };
+		6890C00121BADE690043412D /* Level-02.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6890C00021BADE690043412D /* Level-02.plist */; };
+		6890C00321BAE1250043412D /* Level-03.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6890C00221BAE1250043412D /* Level-03.plist */; };
+		6890C00521BAE1A40043412D /* Level-04.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6890C00421BAE1A40043412D /* Level-04.plist */; };
+		6890C00721BAE1AC0043412D /* Level-05.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6890C00621BAE1AC0043412D /* Level-05.plist */; };
 		68B67FE121B8278A00A37C5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B67FE021B8278A00A37C5A /* AppDelegate.swift */; };
 		68B67FE321B8278A00A37C5A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 68B67FE221B8278A00A37C5A /* GameScene.sks */; };
 		68B67FE521B8278A00A37C5A /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 68B67FE421B8278A00A37C5A /* Actions.sks */; };
@@ -33,6 +37,10 @@
 		687A00A021B8547100B03EB9 /* VineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VineNode.swift; sourceTree = "<group>"; };
 		6890BFFC21BAC0560043412D /* StartScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
 		6890BFFE21BAC0670043412D /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
+		6890C00021BADE690043412D /* Level-02.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Level-02.plist"; sourceTree = "<group>"; };
+		6890C00221BAE1250043412D /* Level-03.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Level-03.plist"; sourceTree = "<group>"; };
+		6890C00421BAE1A40043412D /* Level-04.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Level-04.plist"; sourceTree = "<group>"; };
+		6890C00621BAE1AC0043412D /* Level-05.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Level-05.plist"; sourceTree = "<group>"; };
 		68B67FDD21B8278A00A37C5A /* FeedMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeedMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68B67FE021B8278A00A37C5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68B67FE221B8278A00A37C5A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -116,6 +124,10 @@
 			isa = PBXGroup;
 			children = (
 				68B67FFA21B8281600A37C5A /* Level-01.plist */,
+				6890C00021BADE690043412D /* Level-02.plist */,
+				6890C00221BAE1250043412D /* Level-03.plist */,
+				6890C00421BAE1A40043412D /* Level-04.plist */,
+				6890C00621BAE1AC0043412D /* Level-05.plist */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -215,7 +227,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6890C00321BAE1250043412D /* Level-03.plist in Resources */,
 				68B67FEC21B8278A00A37C5A /* Main.storyboard in Resources */,
+				6890C00721BAE1AC0043412D /* Level-05.plist in Resources */,
 				68B67FE321B8278A00A37C5A /* GameScene.sks in Resources */,
 				68B6800421B8281600A37C5A /* Level-01.plist in Resources */,
 				68B6800B21B8281600A37C5A /* Splash.caf in Resources */,
@@ -224,8 +238,10 @@
 				68B6800A21B8281600A37C5A /* Slice.caf in Resources */,
 				6890BFFF21BAC0670043412D /* StartScene.sks in Resources */,
 				68B6800921B8281600A37C5A /* NomNom.caf in Resources */,
+				6890C00521BAE1A40043412D /* Level-04.plist in Resources */,
 				68B67FEE21B8278C00A37C5A /* Assets.xcassets in Resources */,
 				68B67FF121B8278C00A37C5A /* LaunchScreen.storyboard in Resources */,
+				6890C00121BADE690043412D /* Level-02.plist in Resources */,
 				68B67FE521B8278A00A37C5A /* Actions.sks in Resources */,
 				68B6800621B8281600A37C5A /* Particle.sks in Resources */,
 				68B6800721B8281600A37C5A /* Particle@2x.png in Resources */,

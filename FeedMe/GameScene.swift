@@ -10,6 +10,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     var scoreLabel: SKLabelNode!
     
+    var levelLabel: SKLabelNode!
+    var gameOver: SKLabelNode!
+    var lastScore: SKLabelNode!
+    var backToMenu: SKSpriteNode!
+    var backToMenuLabel: SKLabelNode!
+    private static var levelNum:Int! = 0;
+    
     private static var score: Int! = 0
     var scoreTemp = 0
     override func didMove(to view: SKView) {
@@ -19,9 +26,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setUpPrize()
         setUpVines()
         setUpCrocodile()
-        showLives()
         setUpAudio()
         setScoreLabel()
+        showLives()
 
     }
     
@@ -34,6 +41,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.position = CGPoint(x: size.width - 70 , y: size.height - 25)
         scoreLabel.zPosition = Layer.UI
         addChild(scoreLabel)
+        
+        scoreTemp = GameScene.levelNum+1
+        levelLabel = SKLabelNode(fontNamed: "Chalkduster")
+        levelLabel.text = "Level: \(scoreTemp)"
+        levelLabel.fontSize = 25
+        levelLabel.position = CGPoint(x: frame.midX , y: 10)
+        levelLabel.zPosition = Layer.UI
+        addChild(levelLabel)
     }
     
     //MARK: - Level setup
@@ -78,8 +93,49 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: - Vine methods
     
     fileprivate func setUpVines() {
+        
+        
+        if(GameScene.levelNum > 4)
+        {
+            self.removeAllChildren()
+            setUpScenery()
+            scoreTemp = GameScene.score
+            gameOver = SKLabelNode(fontNamed: "Noteworthy-Bold")
+            gameOver.text = "Game Over!"
+            gameOver.fontSize = 35
+            gameOver.position = CGPoint(x: frame.midX , y: frame.midY+50)
+            gameOver.zPosition = Layer.UI
+            addChild(gameOver)
+            
+            lastScore = SKLabelNode(fontNamed: "Noteworthy-Bold")
+            lastScore.text = "Score: \(scoreTemp)"
+            lastScore.fontSize = 35
+            lastScore.position = CGPoint(x: frame.midX , y: frame.midY)
+            lastScore.zPosition = Layer.UI
+            addChild(lastScore)
+            
+            backToMenu = SKSpriteNode(imageNamed: ImageName.Button)
+            backToMenu.position = CGPoint(x: frame.midX, y: frame.midY-50)
+            backToMenu.zPosition = 1
+            addChild(backToMenu)
+            
+            backToMenuLabel = SKLabelNode(fontNamed: "Noteworthy-Bold")
+            backToMenuLabel.text = "Back to Menu"
+            backToMenuLabel.fontSize = 40.0
+            backToMenuLabel.position = CGPoint(x: frame.midX, y: frame.midY-60)
+            backToMenuLabel.zPosition = 2
+            addChild(backToMenuLabel)
+            
+            isGameOver = true
+        }
+        
+        else
+        {
         // 1 load vine data
-        let dataFile = Bundle.main.path(forResource: GameConfiguration.VineDataFile, ofType: nil)
+        
+        
+        
+        let dataFile = Bundle.main.path(forResource: GameConfiguration.VineDataFile[GameScene.levelNum], ofType: nil)
         let vines = NSArray(contentsOfFile: dataFile!) as! [NSDictionary]
         
         // 2 add vines
@@ -98,6 +154,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // 5 connect the other end of the vine to the prize
             vine.attachToPrize(prize)
+            }
         }
         
     }
@@ -150,9 +207,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     //MARK: - Touch handling
-    
+    var isGameOver: Bool = false
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         vineCut = false
+        
+        if let touch = touches.first {
+            let location = touch.location(in: self)
+            let objects = nodes(at: location)
+            
+            if(isGameOver)
+            {
+                if objects.contains(backToMenu)
+                {
+                    GameScene.numLive = 3
+                    let gameSceneTemp = StartScene(size: self.size)
+                    self.scene?.view?.presentScene(gameSceneTemp, transition: SKTransition.doorsCloseHorizontal(withDuration: 1.0))
+                    
+                }
+            }
+           
+            
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -203,7 +278,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if prize.position.y <= 0 {
             levelOver = true
-            run(splashSoundAction)
+            
+            if(StartScene.effects == "On")
+            {
+               run(splashSoundAction)
+            }
+
             switchToNewGameWithTransition(SKTransition.fade(withDuration: 1.0))
             GameScene.numLive = GameScene.numLive - 1
         }
@@ -228,27 +308,68 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let sequence = SKAction.sequence([shrink, removeNode])
             prize.run(sequence)
             
-            run(nomNomSoundAction)
+            if(StartScene.effects == "On")
+            {
+                run(nomNomSoundAction)
+            }
+            
             runNomNomAnimationWithDelay(0.15)
             
             // transition to next level
             switchToNewGameWithTransition(SKTransition.doorway(withDuration: 1.0))
             GameScene.numLive = 3
-            
             GameScene.score = GameScene.score + 1
+            GameScene.levelNum = GameScene.levelNum + 1
         }
     }
     private static var numLive: Int! = 3
      fileprivate func showLives(){
         
-        for i in 0...GameScene.numLive-1{
-            let lives = SKSpriteNode(imageNamed: ImageName.Heart)
-            lives.anchorPoint = CGPoint(x: 0, y: 0)
-            lives.position = CGPoint(x: CGFloat(CGFloat(i)*lives.size.width), y: size.height-lives.size.height)
-            lives.zPosition = Layer.UI
-           
-            addChild(lives)
+        if(GameScene.numLive>0)
+        {
+            for i in 0...GameScene.numLive-1{
+                let lives = SKSpriteNode(imageNamed: ImageName.Heart)
+                lives.anchorPoint = CGPoint(x: 0, y: 0)
+                lives.position = CGPoint(x: CGFloat(CGFloat(i)*lives.size.width), y: size.height-lives.size.height)
+                lives.zPosition = Layer.UI
+                
+                addChild(lives)
+            }
         }
+        else
+        {
+            self.removeAllChildren()
+            setUpScenery()
+            scoreTemp = GameScene.score
+            gameOver = SKLabelNode(fontNamed: "Noteworthy-Bold")
+            gameOver.text = "Game Over!"
+            gameOver.fontSize = 35
+            gameOver.position = CGPoint(x: frame.midX , y: frame.midY+50)
+            gameOver.zPosition = Layer.UI
+            addChild(gameOver)
+            
+            lastScore = SKLabelNode(fontNamed: "Noteworthy-Bold")
+            lastScore.text = "Score: \(scoreTemp)"
+            lastScore.fontSize = 35
+            lastScore.position = CGPoint(x: frame.midX , y: frame.midY)
+            lastScore.zPosition = Layer.UI
+            addChild(lastScore)
+            
+            backToMenu = SKSpriteNode(imageNamed: ImageName.Button)
+            backToMenu.position = CGPoint(x: frame.midX, y: frame.midY-50)
+            backToMenu.zPosition = 1
+            addChild(backToMenu)
+            
+            backToMenuLabel = SKLabelNode(fontNamed: "Noteworthy-Bold")
+            backToMenuLabel.text = "Back to Menu"
+            backToMenuLabel.fontSize = 40.0
+            backToMenuLabel.position = CGPoint(x: frame.midX, y: frame.midY-60)
+            backToMenuLabel.zPosition = 2
+            addChild(backToMenuLabel)
+            
+            isGameOver = true
+        }
+
     }
    
     
@@ -263,7 +384,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // if it has a name it must be a vine node
         if let name = node.name {
             
-            run(sliceSoundAction)
+            if(StartScene.effects == "On")
+            {
+                run(sliceSoundAction)
+            }
+            
             
             // snip the vine
             node.removeFromParent()
@@ -280,7 +405,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             crocodile.texture = SKTexture(imageNamed: ImageName.CrocMouthOpen)
             animateCrocodile()
             
-            vineCut = true
+            if(StartScene.multiple == "Off")
+            {
+                vineCut = true
+            }
+            
         }
         
     }
@@ -317,9 +446,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             GameScene.backgroundMusicPlayer.numberOfLoops = -1
         }
         
-        if !GameScene.backgroundMusicPlayer.isPlaying {
-            GameScene.backgroundMusicPlayer.play()
+        if(StartScene.musics == "On")
+        {
+            if !GameScene.backgroundMusicPlayer.isPlaying {
+                GameScene.backgroundMusicPlayer.play()
+            }
         }
+        
         
         sliceSoundAction = SKAction.playSoundFileNamed(SoundFile.Slice, waitForCompletion: false)
         splashSoundAction = SKAction.playSoundFileNamed(SoundFile.Splash, waitForCompletion: false)
