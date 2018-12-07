@@ -12,6 +12,8 @@ struct ImageName {
     static let Prize = "Pineapple"
     static let PrizeMask = "PineappleMask"
     static let Heart = "heart-full"
+    static let Button = "button"
+    static let ButtonRestart = "button-restart"
 }
 
 struct Layer {
